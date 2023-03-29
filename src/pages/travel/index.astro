@@ -1,0 +1,53 @@
+---
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+const posts = (await getCollection('travel'));
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+
+</head>
+	<body class="bg-slate-50">
+		<Header />
+		<main class="mx-auto text-center">
+			<section class="p-20 gap-5 py-5">
+				<h1 class="text-7xl font-mono md:py-10 py-5 ">Kitaplar</h1>
+				<ul class="gap-5  grid md:grid-cols-1 xl:grid-cols-3">
+					{
+						posts.map((post) => (
+							<li>
+								<a href={`/travel/${post.slug}/`}>
+									
+									<div class="max-w-sm mx-auto text-center rounded overflow-hidden shadow-lg space-y-5">
+  					<img class="w-full" src={post.data.heroImage} alt="Sunset in the mountains">
+  <div class="px-6 py-4">
+    <div class="font-bold text-xl mb-2">{post.data.title}</div>
+    <p class="text-gray-700 text-base">
+      {post.data.description}
+    </p>
+  </div>
+  <div class="px-6 pt-4 pb-2">
+    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#{post.data.hashtags[0]}</span>
+    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#{post.data.hashtags[1]}</span>
+    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#{post.data.hashtags[2]}</span>
+  </div>
+</div>
+
+									</a>
+							</li>
+						))
+					}
+					
+				</ul>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+
+

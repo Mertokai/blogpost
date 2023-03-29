@@ -1,0 +1,29 @@
+---
+import { getCollection } from "astro:content";
+import BlogPost from '../../layouts/BlogPost.astro';
+
+export async function getStaticPaths() {
+   let posts = await getCollection("travel")
+   return posts.map((item) => (
+        {
+            params: {slug:item.slug},
+            props: item,
+        }
+
+   ))
+}
+
+const post = Astro.props
+const { Content } = await post.render();
+---
+
+<BlogPost>
+	<div class="space-y-10">
+	<h1 class="text-purple-600  text-center font-mono  text-7xl">{post.data.title.toUpperCase()}</h1>
+	<img class="max-w-5xl mx-auto md:w-full md:h-96 w-full h-auto" src={post.data.heroImage} alt="post">
+	<!-- neden div gerekti  -->
+	<div class="font-sans max-w-7xl space-y-1 tracking-wide  mx-auto">
+		<Content/>
+	</div>
+</div>
+</BlogPost>
